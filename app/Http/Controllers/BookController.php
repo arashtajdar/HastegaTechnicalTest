@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\BookCollection;
 use App\Models\Book;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class BookController extends Controller
@@ -18,7 +20,7 @@ class BookController extends Controller
      */
     public function index(): Response
     {
-        $books = Book::with(["author","user"])->get();
+        $books = Book::where("user_id",Auth::id())->with(["author","user"])->get();
         return Response(BookCollection::collection($books),"200");
     }
 
@@ -38,7 +40,13 @@ class BookController extends Controller
             $errorText = $validator->messages()->first('*');
             return Response($errorText,"422");
         }
-        $book = Book::create($request->all());
+        $book = Book::create(
+            [
+                "name" => $request->name,
+                "author_id" => $request->author_id?$request->author_id:null,
+                "user_id" => Auth::id(),
+            ]
+        );
 //        event(new NewBookAddedEvent($product)); // todo
         return Response($book,"200");
     }
@@ -51,6 +59,8 @@ class BookController extends Controller
      */
     public function show(int $id): Response
     {
+        $book = Book::find($id);
+        $this->authorize('view', $book);
         return Response(new BookCollection(Book::with(["author","user"])->find($id)),"200");
     }
 
@@ -61,8 +71,11 @@ class BookController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, int $id): Response
+    public function update(Request $request,$id): Response
     {
+        $book = Book::find($id);
+        $this->authorize('update', $book);
+
         $validator = Validator::make($request->all(),[
             "author_id" => 'nullable|numeric|exists:Authors,id',
         ]);
@@ -70,7 +83,6 @@ class BookController extends Controller
             $errorText = $validator->messages()->first('*');
             return Response($errorText,"422");
         }
-        $book = Book::find($id);
         if (!$book){
             return Response("Not found","404");
         }
@@ -86,6 +98,8 @@ class BookController extends Controller
      */
     public function destroy(int $id): Response
     {
+        $book = Book::find($id);
+        $this->authorize('delete', $book);
         Book::destroy($id);
         return Response("Successfully deleted",200);
     }
