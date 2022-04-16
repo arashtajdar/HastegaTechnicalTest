@@ -49,7 +49,7 @@ class AuthController extends Controller
             ], 401);
         }
 
-        $token = $user->createToken('UnitedRemoteToken')->plainTextToken;
+        $token = $user->createToken('HastegaToken')->plainTextToken;
 
         $response = [
             'user' => $user,
