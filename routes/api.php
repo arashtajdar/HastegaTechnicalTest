@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthorController;
 use App\Http\Resources\AuthorCollection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -14,11 +15,11 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('/Authors',[AuthorCollection::class,'index']);
-Route::get('/Author/{id}',[AuthorCollection::class,'show']);
-Route::post('/Author',[AuthorCollection::class,'store']);
-Route::put('/Author/{id}',[AuthorCollection::class,'update']);
-Route::delete('/Author/{id}',[AuthorCollection::class,'destroy']);
+Route::get('/authors',[AuthorController::class,'index']);
+Route::get('/author/{id}',[AuthorController::class,'show']);
+Route::post('/author',[AuthorController::class,'store']);
+Route::put('/author/{id}',[AuthorController::class,'update']);
+Route::delete('/author/{id}',[AuthorController::class,'destroy']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
