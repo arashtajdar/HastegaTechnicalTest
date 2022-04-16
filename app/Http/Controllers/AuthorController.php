@@ -55,6 +55,35 @@ class AuthorController extends Controller
         return Response(new AuthorCollection(Author::find($id)),"200");
     }
 
+    /**
+     * Update the Author based on given data.
+     *
+     * @param Request $request
+     * @param int $id
+     * @return Response
+     */
+    public function update(Request $request, int $id): Response
+    {
+
+        $author = Author::find($id);
+        if (!$author){
+            return Response("Not found","404");
+        }
+        $author->update($request->all());
+        return Response(new AuthorCollection($author),"200");
+    }
+
+    /**
+     * Remove the specified Author from database.
+     *
+     * @param int $id
+     * @return Response
+     */
+    public function destroy(int $id): Response
+    {
+        Author::destroy($id);
+        return Response("Successfully deleted",200);
+    }
 
 
 }
