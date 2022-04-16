@@ -24,6 +24,25 @@ class AuthorController extends Controller
         $authors = Author::all();
         return Response(AuthorCollection::collection($authors),"200");
     }
+    /**
+     * Save a new Author into database.
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function store(Request $request): Response
+    {
+        $validator = Validator::make($request->all(),[
+            "name" => "required|string",
+        ]);
+        if ($validator->fails()) {
+            $errorText = $validator->messages()->first('*');
+            return Response($errorText,"422");
+        }
+        $author = Author::create($request->all());
+//        event(new NewAuthorAddedEvent($author)); todo : add event
+        return Response($author,"200");
+    }
 
 
 
