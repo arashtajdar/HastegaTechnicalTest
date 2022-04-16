@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
 use App\Http\Resources\AuthorCollection;
@@ -15,7 +16,13 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
+
+
 */
+// Auth routes
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+//
 Route::get('/authors',[AuthorController::class,'index']);
 Route::get('/author/{id}',[AuthorController::class,'show']);
 Route::post('/author',[AuthorController::class,'store']);
