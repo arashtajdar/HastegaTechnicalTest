@@ -44,6 +44,17 @@ class AuthorController extends Controller
         return Response($author,"200");
     }
 
+    /**
+     * Display the Author specified by id.
+     *
+     * @param int $id
+     * @return Response
+     */
+    public function show(int $id): Response
+    {
+        return Response(new AuthorCollection(Author::find($id)),"200");
+    }
+
 
 
 }
