@@ -12,6 +12,7 @@ use JsonSerializable;
  * @property mixed name
  * @property mixed author
  * @property mixed created_at
+ * @property mixed user
  */
 class BookCollection extends JsonResource
 {
@@ -25,8 +26,9 @@ class BookCollection extends JsonResource
     {
         return [
             "Book name" => $this->name,
-            "Book author" => $this->author->name?$this->author->name:"No author",
-            "creation date" => $this->created_at,
+            "Book author" => $this->author?$this->author->name:"No author",
+            "Created user" => $this->user?$this->user->name:"No user assigned",
+            "Creation date" => $this->created_at,
         ];
     }
 }

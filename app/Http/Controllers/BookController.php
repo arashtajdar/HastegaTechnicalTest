@@ -18,7 +18,7 @@ class BookController extends Controller
      */
     public function index(): Response
     {
-        $books = Book::with("author")->get();
+        $books = Book::with(["author","user"])->get();
         return Response(BookCollection::collection($books),"200");
     }
 
@@ -51,7 +51,7 @@ class BookController extends Controller
      */
     public function show(int $id): Response
     {
-        return Response(new BookCollection(Book::with("author")->find($id)),"200");
+        return Response(new BookCollection(Book::with(["author","user"])->find($id)),"200");
     }
 
     /**
