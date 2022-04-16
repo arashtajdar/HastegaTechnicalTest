@@ -52,7 +52,11 @@ class AuthorController extends Controller
      */
     public function show(int $id): Response
     {
-        return Response(new AuthorCollection(Author::find($id)),"200");
+        $author = Author::find($id);
+        if(!$author){
+            return Response("Not found!","404");
+        }
+        return Response(new AuthorCollection($author),"200");
     }
 
     /**
