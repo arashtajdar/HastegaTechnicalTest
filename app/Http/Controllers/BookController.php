@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 
+use App\Events\BookViewEvent;
 use App\Http\Resources\BookCollection;
 use App\Models\Book;
 use App\Models\User;
+use Illuminate\Console\Scheduling\Event;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -61,6 +63,7 @@ class BookController extends Controller
     {
         $book = Book::find($id);
         $this->authorize('view', $book);
+        event(new BookViewEvent($book));
         return Response(new BookCollection(Book::with(["author","user"])->find($id)),"200");
     }
 
