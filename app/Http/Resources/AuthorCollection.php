@@ -10,6 +10,7 @@ use JsonSerializable;
 /**
  * @property mixed name
  * @property mixed created_at
+ * @property mixed id
  */
 class AuthorCollection extends JsonResource
 {
@@ -22,8 +23,9 @@ class AuthorCollection extends JsonResource
     public function toArray($request)
     {
         return [
-            "Author name" => $this->name,
-            "Creation date" => $this->created_at
+            "Author_id" => $this->id,
+            "Author_name" => $this->name,
+            "Creation_date" => $this->created_at
         ];
     }
 }

@@ -13,6 +13,8 @@ use JsonSerializable;
  * @property mixed author
  * @property mixed created_at
  * @property mixed user
+ * @property mixed view_count
+ * @property mixed id
  */
 class BookCollection extends JsonResource
 {
@@ -25,10 +27,12 @@ class BookCollection extends JsonResource
     public function toArray($request)
     {
         return [
-            "Book name" => $this->name,
-            "Book author" => $this->author?$this->author->name:"No author",
-            "Created user" => $this->user?$this->user->name:"No user assigned",
-            "Creation date" => $this->created_at,
+            "Book_id" => $this->id,
+            "Book_name" => $this->name,
+            "Book_author" => $this->author?$this->author->name:"No author",
+            "view_count" => $this->view_count,
+            "Created_user" => $this->user?$this->user->name:"No user assigned",
+            "Creation_date" => $this->created_at,
         ];
     }
 }

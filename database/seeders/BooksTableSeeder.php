@@ -16,7 +16,10 @@ class BooksTableSeeder extends Seeder
      */
     public function run()
     {
-        Book::create(Book::factory()->make()->attributesToArray());
+        for ($i=0;$i<50;$i++) {
+
+            Book::create(Book::factory()->make()->attributesToArray());
+        }
         $this->command->info('Books table seeded!');
 
     }

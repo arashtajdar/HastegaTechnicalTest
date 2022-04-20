@@ -17,7 +17,9 @@ class AuthorsTableSeeder extends Seeder
      */
     public function run()
     {
-        Author::create(Author::factory()->make()->attributesToArray());
+        for ($i=0;$i<50;$i++){
+            Author::create(Author::factory()->make()->attributesToArray());
+        }
         $this->command->info('Authors table seeded!');
 
     }
