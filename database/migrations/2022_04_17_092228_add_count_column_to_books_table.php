@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('books', function (Blueprint $table) {
-            $table->integer("view_count")->after("user_id");
+            $table->integer("view_count")->default(0)->after("user_id");
         });
     }
 
